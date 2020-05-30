@@ -1,0 +1,93 @@
+import requests
+import RPi.GPIO as gpio
+import time
+import sys
+from sensor import distance
+from sensor2 import Distance
+from sensor3 import dist
+r = requests.post('https://maker.ifttt.com/trigger/detect/with/key/Q901r6eexrkr4wrAdiVee', params={"value1":"none","value2":"none","value3":"none"})
+
+ 
+
+ 
+def pivot_left(tf):
+    gpio.output(8,False)
+    gpio.output(11, True)
+    gpio.output(13, True)
+    gpio.output(15, False)
+    time.sleep(tf)
+
+ 
+
+def turn_left(tf):
+    gpio.output(8,True)
+    gpio.output(11, False)
+    gpio.output(13, False)
+    gpio.output(15, True)
+    time.sleep(tf)
+
+ 
+
+def pivot_right(tf):
+    gpio.output(8,True)
+    gpio.output(11, True)
+    gpio.output(13, True)
+    gpio.output(15, False)
+    time.sleep(tf)
+
+ 
+
+def turn_right(tf):
+    gpio.output(8,False)
+    gpio.output(11, True)
+    gpio.output(13, False)
+    gpio.output(15,False)
+    time.sleep(tf)
+
+ 
+
+def reverse(tf):
+    gpio.output(8,True)
+    gpio.output(11, False)
+    gpio.output(13,True)
+    gpio.output(15,False)
+    time.sleep(tf)
+
+ 
+
+def forward():
+    gpio.output(8,False)
+    gpio.output(11, True)
+    gpio.output(13,False)
+    gpio.output(15,True)
+    time.sleep(tf)
+
+ 
+
+def check():
+    while distance() > 15:
+        forward()
+    if distance() < 15:
+        if Distance() < 15 :
+            turn_right(4)
+            check()
+        elif dist() < 15:
+            pivot_left(4)
+            check()
+        elif Distance() > dist():
+            turn_right(4)
+            check()
+        elif dist() > Distance():
+            pivot_left(4)
+            check()
+
+ 
+
+
+ 
+
+check()
+
+ 
+
+gpio.cleanup()
