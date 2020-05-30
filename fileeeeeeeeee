@@ -1,0 +1,74 @@
+import RPi.GPIO as GPIO
+import time
+import sys
+from sensor import distance
+from sensor2 import Distance
+from sensor3 import dist
+
+GPIO.setmode(GPIO.BOARD)
+GPIO.setup(8,GPIO.OUT)
+GPIO.setup(11,GPIO.OUT)
+GPIO.setup(13,GPIO.OUT)
+GPIO.setup(15,GPIO.OUT)
+
+def pivot_left(tf):
+    GPIO.output(8,False)
+    GPIO.output(11, True)
+    GPIO.output(13, True)
+    GPIO.output(15, False)
+    time.sleep(tf)
+
+def turn_left(tf):
+    GPIO.output(8,True)
+    GPIO.output(11, False)
+    GPIO.output(13, False)
+    GPIO.output(15, True)
+    time.sleep(tf)
+
+def pivot_right(tf):
+    GPIO.output(8,True)
+    GPIO.output(11, True)
+    GPIO.output(13, True)
+    GPIO.output(15, False)
+    time.sleep(tf)
+
+def turn_right(tf):
+    GPIO.output(8,False)
+    GPIO.output(11, True)
+    GPIO.output(13, False)
+    GPIO.output(15,False)
+    time.sleep(tf)
+
+def reverse(tf):
+    GPIO.output(8,True)
+    GPIO.output(11, False)
+    GPIO.output(13,True)
+    GPIO.output(15,False)
+    time.sleep(tf)
+
+def forward():
+    GPIO.output(8,False)
+    GPIO.output(11, True)
+    GPIO.output(13,False)
+    GPIO.output(15,True)
+    time.sleep(tf)
+
+def check():
+    while distance() > 15:
+        forward()
+    if distance() < 15:
+        if Distance() < 15 :
+            turn_right(4)
+            check()
+        elif dist() < 15:
+            pivot_left(4)
+            check()
+        elif Distance() > dist():
+            turn_right(4)
+            check()
+        elif dist() > Distance():
+            pivot_left(4)
+            check()
+
+check()
+GPIO.cleanup()
